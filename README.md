@@ -1,6 +1,11 @@
 # Shopify - a simple eCommerce app
 
-Welcome to my E-commerce App! This project is a dummy e-commerce application built using React, Tailwind CSS, Vite, TypeScript, and Redux Toolkit. It aims to showcase various features commonly found in e-commerce platforms, including a homepage, product listing page, cart functionality, and user-authenticated pages like account and wishlist.
+Welcome to our enhanced e-commerce project, built using React, Tailwind CSS, Vite, TypeScript, and Redux Toolkit.
+
+## Project Links
+
+- **Our Live Demo (Enhanced Version):** https://simple-ecommerece-fixed.netlify.app
+- **Original Given Reference Website:** https://shopify-xrh7.onrender.com/
 
 ## Features
 
@@ -9,6 +14,9 @@ Welcome to my E-commerce App! This project is a dummy e-commerce application bui
 - **Cart:** Allow users to add products to their cart, view cart contents, and proceed to checkout.
 - **User Authentication:** Enable users to create accounts, log in, and access personalized features like wishlists and account settings.
 - **Wishlist:** Allow users to save products they're interested in for future reference.
+- **Order Timeline:** Track an order through Confirmed, Processing, Shipped, and Delivered stages using a simulated timeline.
+- **Easy Returns:** Submit return requests for eligible delivered orders and view their status. Return handling is simulated locally; it does not initiate a real refund or pickup.
+- **One-Tap Reorder:** Add items from a previous order back to the cart.
 
 ## Technologies Used
 

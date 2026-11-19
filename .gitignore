@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+# Environment and local backups
+.env
+.env.*
+!.env.example
+.featurethon-backup-*/

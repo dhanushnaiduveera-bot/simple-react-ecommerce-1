@@ -1,4 +1,4 @@
-import { Provider } from "react-redux";
+﻿import { Provider } from "react-redux";
 import "./App.css";
 import { store } from "./redux/store";
 import Navbar from "./components/Navbar";
@@ -18,6 +18,8 @@ import BannerPopup from "./components/BannerPopup";
 import AllCategories from "./pages/AllCategories";
 import SingleCategory from "./pages/SingleCategory";
 import SearchPage from "./pages/SearchPage";
+import Checkout from "./pages/Checkout";
+import Orders from "./pages/Orders";
 
 function App() {
   return (
@@ -30,11 +32,11 @@ function App() {
         <Route path="/categories" element={<AllCategories />} />
         <Route path="/product/:productID" element={<SingleProduct />} />
         <Route path="/category/:slug" element={<SingleCategory />} />
-        <Route path="/wishlist" element={<ProtectedRoute />}>
+        <Route element={<ProtectedRoute />}>
           <Route path="/wishlist" element={<Wishlist />} />
-        </Route>
-        <Route path="/account" element={<ProtectedRoute />}>
           <Route path="/account" element={<Profile />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/orders" element={<Orders />} />
         </Route>
       </Routes>
       <Toaster position="bottom-center" reverseOrder={false} />

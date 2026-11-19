@@ -1,3 +1,4 @@
+
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CartItem } from "../../models/CartItem";
 import { CartSlice } from "../../models/CartSlice";
@@ -12,57 +13,74 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action: PayloadAction<CartItem>) => {
-      const { cartItems } = state;
-      if (cartItems.findIndex((pro) => pro.id === action.payload.id) === -1) {
-        const item = { ...action.payload, quantity: 1 };
-        return { ...state, cartItems: [...cartItems, item] };
+      const existingItem = state.cartItems.find(
+        (item) => item.id === action.payload.id
+      );
+
+      if (existingItem) {
+        existingItem.quantity = (existingItem.quantity ?? 1) + 1;
       } else {
-        const updatedItems = cartItems.map((item) =>
-          item.id === action.payload.id
-            ? { ...item, quantity: item.quantity && item.quantity + 1 }
-            : item
-        );
-        return { ...state, cartItems: updatedItems };
+        state.cartItems.push({ ...action.payload, quantity: 1 });
       }
     },
+
+    addItemsToCart: (state, action: PayloadAction<CartItem[]>) => {
+      action.payload.forEach((reorderedItem) => {
+        const existingItem = state.cartItems.find(
+          (item) => item.id === reorderedItem.id
+        );
+
+        const quantityToAdd = reorderedItem.quantity ?? 1;
+
+        if (existingItem) {
+          existingItem.quantity =
+            (existingItem.quantity ?? 1) + quantityToAdd;
+        } else {
+          state.cartItems.push({
+            ...reorderedItem,
+            quantity: quantityToAdd,
+          });
+        }
+      });
+    },
+
     removeFromCart: (state, action: PayloadAction<number>) => {
-      const { cartItems } = state;
-      const updatedItems = cartItems.filter(
+      state.cartItems = state.cartItems.filter(
         (item) => item.id !== action.payload
       );
-      return { ...state, cartItems: updatedItems };
     },
+
     reduceFromCart: (state, action: PayloadAction<number>) => {
-      const { cartItems } = state;
-      const _item = cartItems.find((item) => item.id === action.payload);
-      if (_item?.quantity && _item?.quantity > 1) {
-        const updatedList = cartItems.map((item) =>
-          item.id === action.payload
-            ? { ...item, quantity: item.quantity && item.quantity - 1 }
-            : item
-        );
-        return { ...state, cartItems: updatedList };
+      const item = state.cartItems.find(
+        (item) => item.id === action.payload
+      );
+
+      if (item && (item.quantity ?? 1) > 1) {
+        item.quantity = (item.quantity ?? 1) - 1;
       } else {
-        const updatedItems = cartItems.filter(
+        state.cartItems = state.cartItems.filter(
           (item) => item.id !== action.payload
         );
-        return { ...state, cartItems: updatedItems };
       }
     },
+
     setCartState: (state, action: PayloadAction<boolean>) => {
-      return { ...state, cartOpen: action.payload };
+      state.cartOpen = action.payload;
     },
+
     emptyCart: (state) => {
-      return { ...state, cartItems: [] };
+      state.cartItems = [];
     },
   },
 });
 
 export const {
   addToCart,
+  addItemsToCart,
   removeFromCart,
   setCartState,
   reduceFromCart,
   emptyCart,
 } = cartSlice.actions;
+
 export default cartSlice.reducer;
